@@ -14,8 +14,6 @@ class UsersService {
 
     if (userExists) return userExists;
 
-    if (!email) return "Please, fill your email!";
-
     const user = this.usersRepository.create({ email });
 
     await this.usersRepository.save(user);
