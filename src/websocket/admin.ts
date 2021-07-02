@@ -6,7 +6,8 @@ io.on("connect", async (socket) => {
   const connectionsService = new ConnectionsService();
   const messagesService = new MessagesService();
 
-  const allConnectionsWithoutAdmin = await connectionsService.findAllWithoutAdmin();
+  const allConnectionsWithoutAdmin =
+    await connectionsService.findAllWithoutAdmin();
 
   io.emit("admin_list_all_users", allConnectionsWithoutAdmin);
 
@@ -31,7 +32,7 @@ io.on("connect", async (socket) => {
 
     io.to(socket_id).emit("admin_send_to_client", {
       text,
-      admin_id: socket.id,
+      socket_id: socket.id,
     });
   });
 });
