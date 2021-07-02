@@ -4,8 +4,8 @@ import { MessagesRepository } from "../repositoreis/MessagesRepository";
 
 interface IMessageCreate {
   admin_id?: string;
-  user_id: string;
   text: string;
+  user_id: string;
 }
 
 class MessagesService {
@@ -15,8 +15,12 @@ class MessagesService {
     this.messagesRepository = getCustomRepository(MessagesRepository);
   }
 
-  async create({ admin_id, user_id, text }: IMessageCreate) {
-    const message = this.messagesRepository.create({ admin_id, user_id, text });
+  async create({ admin_id, text, user_id }: IMessageCreate) {
+    const message = this.messagesRepository.create({
+      admin_id,
+      text,
+      user_id,
+    });
 
     await this.messagesRepository.save(message);
 
@@ -24,12 +28,12 @@ class MessagesService {
   }
 
   async listByUser(user_id: string) {
-    const messages = await this.messagesRepository.find({
+    const list = await this.messagesRepository.find({
       where: { user_id },
       relations: ["user"],
     });
 
-    return messages;
+    return list;
   }
 }
 
